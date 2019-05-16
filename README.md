@@ -29,7 +29,7 @@ Image emm/torch_whl is based on emm/miniconda3 and may be deleted after executin
 The script keeps image and container for postmortem analysis in case of failure.
 
 * Script [build.4.jupyter.sh](build.4.jupyter.sh) builds image [emm/jupyter](jupyter/Dockerfile).
-It is based on emm/miniconda3, adds Tensorflow and PyTorch wheels, configures Jupyter Notebook server.
+It is based on jupyter/scipy-notebook, adds Tensorflow and PyTorch wheels, configures Jupyter Notebook server with Tensorboard support.
 
 * Script [build.all.sh](build.all.sh) is equal to the execution of all above scripts in sequence. 
 It also checks the `wheels` folder and skips building wheels if they already exist.
