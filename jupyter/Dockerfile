@@ -34,4 +34,4 @@ RUN pip install --no-cache-dir /tmp/torch-*.whl && \
 RUN pip install --no-cache-dir torchvision
 RUN pip install --no-cache-dir jupyter-tensorboard
 
-CMD ["bash", "-c", "jupyter notebook --notebook-dir=/notebooks --ip 0.0.0.0 --no-browser --allow-root --NotebookApp.token=''"]
+CMD [ "/bin/bash" ]
