@@ -95,4 +95,23 @@ RUN pip install --no-cache-dir torchvision && \
 
 RUN jupyter tensorboard enable --sys-prefix
 
+USER root
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        python3-dev zlib1g-dev libjpeg-dev cmake swig python-pyglet python3-opengl libboost-all-dev libsdl2-dev \
+        libosmesa6-dev patchelf ffmpeg xvfb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+#    freeglut3-dev
+
 USER $NB_UID
+
+RUN conda install -y -c conda-forge pyglet pyopengl pyvirtualdisplay && \
+    conda clean -ya && \
+    pip --no-cache-dir install gym[atari,box2d,classic_control] && \
+    rm -rf /var/lib/apt/lists/* && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
