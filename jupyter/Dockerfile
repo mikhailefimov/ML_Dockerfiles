@@ -35,6 +35,8 @@ RUN apt-get update && \
     echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
+        python3-dev zlib1g-dev libjpeg-dev cmake swig python-pyglet python3-opengl libboost-all-dev libsdl2-dev \
+        freeglut3-dev libosmesa6-dev patchelf ffmpeg xvfb \
         cuda-cudart-$CUDA_PKG_VERSION \
         cuda-compat-10-0 \
         cuda-libraries-$CUDA_PKG_VERSION \
@@ -91,27 +93,12 @@ RUN pip install --no-cache-dir /home/$NB_USER/torch-*.whl && \
 RUN pip install --no-cache-dir torchvision && \
     pip install --no-cache-dir jupyter-tensorboard && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
-RUN jupyter tensorboard enable --sys-prefix
-
-USER root
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        python3-dev zlib1g-dev libjpeg-dev cmake swig python-pyglet python3-opengl libboost-all-dev libsdl2-dev \
-        libosmesa6-dev patchelf ffmpeg xvfb && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
-#    freeglut3-dev
-
-USER $NB_UID
+    fix-permissions /home/$NB_USER && \
+    jupyter tensorboard enable --sys-prefix
 
 RUN conda install -y -c conda-forge pyglet pyopengl pyvirtualdisplay && \
     conda clean -ya && \
-    pip --no-cache-dir install gym[atari,box2d,classic_control] && \
+    pip --no-cache-dir install gym[atari,box2d,classic_control] roboschool gym-retro pybullet && \
     rm -rf /var/lib/apt/lists/* && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
