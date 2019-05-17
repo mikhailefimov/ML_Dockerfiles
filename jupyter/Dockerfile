@@ -71,7 +71,7 @@ RUN conda install mkl six && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-RUN conda install protobuf  grpcio astor gast absl-py termcolor markdown werkzeug matplotlib numpy pyyaml scipy mkl mkl-include cython typing \
+RUN conda install protobuf  grpcio astor gast absl-py termcolor markdown werkzeug matplotlib numpy pyyaml scipy mkl mkl-include cython \
         tensorflow-estimator==1.13.0 \
         tensorboard==1.13.1 && \
     conda install -c conda-forge keras-applications keras-preprocessing && \
