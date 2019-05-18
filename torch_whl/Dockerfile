@@ -1,6 +1,6 @@
-FROM emm/miniconda3
+FROM emm/cuda-dev
 
-RUN conda install -y numpy pyyaml scipy ipython mkl mkl-include cython typing && \
+RUN conda install -y numpy pyyaml scipy ipython mkl mkl-include cython && \
     conda install -y -c pytorch magma-cuda100 && \
     conda clean -ya && \
     pip install ninja && \

@@ -1,22 +1,8 @@
-FROM emm/miniconda3
+FROM emm/cuda-dev
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        libcudnn7-dev=${CUDNN_VERSION}-1+cuda10.0 \
-        libcurl3-dev \
-        rsync \
-        zip \
-        && \
-    find /usr/local/cuda-10.0/lib64/ -type f -name 'lib*_static.a' -not -name 'libcudart_static.a' -delete && \
-    rm /usr/lib/x86_64-linux-gnu/libcudnn_static_v7.a && \
-    apt-get update \
-    && apt-get install -y --no-install-recommends libnvinfer-dev=5.0.2-1+cuda10.0 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y \
-    openjdk-8-jdk \
-    python3-dev \
-    swig
+RUN conda install Pillow h5py matplotlib mock numpy scipy scikit-learn pandas && \
+    conda install -c conda-forge keras-applications keras-preprocessing && \
+    conda clean -ya
 
 # Install bazel
 ARG BAZEL_VERSION=0.19.2
