@@ -2,32 +2,32 @@
 
 This repository contains:
 1. Dockerfiles and build scripts for Jupyter Notebook with NVIDIA GPU support and some ML specific libraries preinstallled.
-2. Scripts to build Tensorflow 1.13.1 and PyTorch 1.1.0 python wheels from sources for GPUs with Compute Capability 3.0 in docker containers. (This is unofficial, so use at your own risk.)
+2. Scripts to build in Docker containers Tensorflow 1.13.1 and PyTorch 1.1.0 from sources for GPUs with Compute Capability 3.0. (This is unofficial, so use at your own risk.)
 
-PyTorch keeps issuing warnings on old GPU, but probably works (see also https://discuss.pytorch.org/t/pytorch-no-longer-supports-this-gpu-because-it-is-too-old/13803/32).
+PyTorch keeps issuing warnings on old GPU but probably works (see also https://discuss.pytorch.org/t/pytorch-no-longer-supports-this-gpu-because-it-is-too-old/13803/32).
 
 # Usage
 
 #### Building custom wheels
 1. Customize build options in files [tensorflow_whl/makeit.sh](tensorflow_whl/makeit.sh) and [torch_whl/makeit.sh](torch_whl/makeit.sh) if needed.
 2. Execute `build.wheels.sh`
-3. Wait.... I's very long process. May take some hours.
-4. Hopefully new wheels will be in the folder `wheels`.
+3. Wait.... It's a very long process. May take some hours.
+4. Hopefully, new wheels will be in the folder `wheels`.
 
 #### Building image with Jupyter Notebook
-To build image with custom versions of Tensorflow and PyTorch execute `build.all.sh`.
-It will use wheels from the folder `wheels`, if they exist.
-Otherwise it will build new ones.
+To build the image with custom versions of Tensorflow and PyTorch execute `build.all.sh`.
+It will use wheels from the folder `wheels` if they exist.
+Otherwise, it will build new ones.
 
-To build image with default tensorflow-gpu and pytorch from conda - execute `build.default.sh`. 
+To build the image with default tensorflow-gpu and pytorch from conda - execute `build.default.sh`. 
 
 #### Starting Jupyter Notebook
-Execute `start_jupyter.sh`. Current folder will be mounted to image as folder for notebooks.
+Execute `start_jupyter.sh`. The current folder will be mounted to image as the folder for notebooks.
 
-Create symlink for start_jupyter.sh somewhere on PATH to start it from any folder.
+Create a symlink for start_jupyter.sh somewhere on PATH to start it from any folder.
 
 ## What's included
-In final [emm/jupyter](jupyter/Dockerfile) image:
+In the final image [emm/jupyter](jupyter/Dockerfile):
 - Everything from [jupyter/scipy-notebook](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-scipy-notebook):
     - [Miniconda](https://conda.io/miniconda.html) Python 3.x, 
     - [Jupyter Notebook server](https://jupyter.org)
@@ -40,7 +40,7 @@ In final [emm/jupyter](jupyter/Dockerfile) image:
 - [PyTorch](https://pytorch.org/) and torchvision
 - OpenAI [gym](https://github.com/openai/gym), [roboschool](https://github.com/openai/roboschool), [retro] (https://github.com/openai/retro)
 - [PyBullet](https://github.com/bulletphysics/bullet3/tree/master/examples/pybullet/gym/pybullet_envs) physics engine and gym environments
-- Virtual display support for rendering on headless server.
+- Virtual display support for rendering on a headless server.
 
 To install additional conda or pip packages - use 
 
@@ -57,7 +57,7 @@ To install OS packages (image is based on Ububtu 18.04) - use
 
 ## Intermediate Dockerfiles
 
- - [emm/cuda-base](cuda-base/Dockerfile) contains Python, Conda, Jupyter Notebook with come common libraries plus CUDA runtime libraries.  
+ - [emm/cuda-base](cuda-base/Dockerfile) contains Python, Conda, Jupyter Notebook with common libraries plus CUDA runtime libraries.  
  
  - [emm/cuda-dev](cuda-dev/Dockerfile) adds to [emm/cuda-base](cuda-base/Dockerfile) build-time CUDA-dev libraries. 
    It is used as common base to build custom wheels.  
@@ -66,6 +66,6 @@ To install OS packages (image is based on Ububtu 18.04) - use
    used only to build custom wheels for Tensorflow and Pytorch with support for  GPUs with Compute Capability 3.0  
 
 ## Prerequisites
-To use these images host must have:
+To use these images, the host must have:
 - [Nvidia-docker (version 2.0)](https://github.com/NVIDIA/nvidia-docker) and it's dependencies
 - [NVIDIA drivers](http://www.nvidia.com) version 410.xx.
