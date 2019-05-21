@@ -80,3 +80,10 @@ RUN pip --no-cache-dir install gym[atari,box2d,classic_control] roboschool gym-r
     rm -rf /var/lib/apt/lists/* && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+RUN conda install -y \
+        catboost \
+        && \
+    conda clean -ya && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
