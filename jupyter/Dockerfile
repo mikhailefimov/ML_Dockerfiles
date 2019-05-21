@@ -81,9 +81,35 @@ RUN pip --no-cache-dir install gym[atari,box2d,classic_control] roboschool gym-r
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
+##################################################################################################
+## Catboost
+##################################################################################################
 RUN conda install -y \
         catboost \
         && \
     conda clean -ya && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+##################################################################################################
+
+##################################################################################################
+## LightGBM
+##################################################################################################
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ocl-icd-libopencl1 ocl-icd-opencl-dev \
+         && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER && \
+    # Add OpenCL ICD files for LightGBM
+    mkdir -p /etc/OpenCL/vendors && \
+    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+
+USER $NB_UID
+
+RUN pip install --no-cache-dir lightgbm --install-option=--gpu && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+##################################################################################################
